@@ -26,4 +26,9 @@ class SuccessResource extends JsonResource
             'success' => true,
         ];
     }
+
+    public static function successResponse($message)
+    {
+        return new self($message);
+    }
 }

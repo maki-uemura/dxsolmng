@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Services\BaseService;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -99,6 +100,21 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof ValidationException) {
             $exception = $this->convertValidationExceptionToResponse($exception, $request);
+        }
+
+        return $this->customApiResponse($exception, $locale);
+    }
+
+    protected function handleResetSearchFormException($exception, $locale)
+    {
+        if ($exception instanceof BaseService\ResetSearchFormException) {
+            $response = [
+                'message' => __('Reset search form failed', [], $locale),
+                'errors' => $exception->getMessage(),
+                'status' => 422
+            ];
+
+            return response()->json($response, 422);
         }
 
         return $this->customApiResponse($exception, $locale);
