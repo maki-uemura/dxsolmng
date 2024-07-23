@@ -1,6 +1,6 @@
 <?php
-
 use App\Http\Controllers\Api\HealthCheckController;
+use App\Http\Controllers\Api\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,3 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::any('/health-check', [HealthCheckController::class, 'index'])->name('health-check');
+Route::post('/search-customers', [SearchController::class, 'searchCustomers'])->name('search.customers');
